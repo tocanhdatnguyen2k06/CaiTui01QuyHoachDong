@@ -35,16 +35,6 @@
   ```bash
   python -c "from logic import giai_cai_tui_dp; print(giai_cai_tui_dp([2], [3], 4))"
   ```
-- **Lệnh chạy giao diện Web trực quan:**  
-  ```bash
-  python app.py
-  ```
-  *(Truy cập `http://localhost:5000` để nhập số lượng đồ vật, sức chứa W, trọng lượng và giá trị tùy ý).*
-- **Lệnh chạy toàn bộ kiểm thử tự động:**  
-  ```bash
-  pytest test_logic.py -v
-  ```
-
 ### 4. Quy ước dữ liệu & Kiểm soát lỗi
 - **Input:** Số nguyên $n \ge 1$, sức chứa túi $W \ge 0$, hai mảng số nguyên dương trọng lượng $w = [w_1, \dots, w_n]$ và giá trị $v = [v_1, \dots, v_n]$ ($w_i > 0, v_i > 0$). Giới hạn mặc định theo phiếu $n \le 100, W \le 1000$ (hệ thống mở rộng linh hoạt tùy chế độ).
 - **Thứ tự chỉ số:** Thuật toán lõi lưu bảng ma trận $f$ kích thước $(n+1) \times (W+1)$ với chỉ số 1-based đồng bộ với công thức toán và mã giả giáo trình.
