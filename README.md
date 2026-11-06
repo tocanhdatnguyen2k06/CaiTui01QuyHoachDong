@@ -1,5 +1,9 @@
 # DT051 — Cái túi 0/1 bằng bảng quy hoạch động
 
+> 🌐 **Trang web mô phỏng trực quan tương tác (Online Visualizer):**  
+> 👉 [https://tocanhdatnguyen2k06.github.io/CaiTui01QuyHoachDong/](https://tocanhdatnguyen2k06.github.io/CaiTui01QuyHoachDong/)  
+> *(Hỗ trợ diễn hoạt từng bước điền bảng quy hoạch động 2D, truy vết ngược chi tiết, sinh đề bài ngẫu nhiên và đọ sức hiệu năng trực tiếp trên trình duyệt)*
+
 Bài giải đề tài cá nhân học phần Cấu trúc dữ liệu và Giải thuật (`INT13185` — Nhóm 03).
 Toàn bộ thuật toán quy hoạch động, truy vết, kiểm tra hợp đồng đầu vào và bộ kiểm thử được tự cài đặt bằng ngôn ngữ Julia (chỉ dùng thư viện chuẩn `Test` và `Printf`), bám sát phiếu giao đề tài **DT051** và mẫu tham khảo của giảng viên.
 
