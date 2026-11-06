@@ -15,6 +15,7 @@ Toàn bộ thuật toán quy hoạch động, truy vết, kiểm tra hợp đồ
 - Giáo trình: `Giao-trinh-Cau-truc-du-lieu-va-Giai-thuat-INT1306.pdf`.
 - Chương, mục, bài tập, trang in và trang PDF đúng đề: Chương 4, mục **4.3.2.2 Bài toán cái túi**; Ví dụ 4.8; Bài 4.3; Bài tập chương 4, câu 22 và 32; trang in 98–100, 103, 112; trang PDF 110–112, 115, 124.
 - URL GitHub thật: `https://github.com/tocanhdatnguyen2k06/CaiTui01QuyHoachDong`; SHA chạy C ghi trong báo cáo và tệp `N24DCDT057_DT051_ToCanhDatNguyen_ThongTinNop.txt` nộp rời.
+- Trang web mô phỏng trực quan online (GitHub Pages): [https://tocanhdatnguyen2k06.github.io/CaiTui01QuyHoachDong/](https://tocanhdatnguyen2k06.github.io/CaiTui01QuyHoachDong/).
 - Permalink tệp thuật toán tại C: `https://github.com/tocanhdatnguyen2k06/CaiTui01QuyHoachDong/blob/9cccb550b30662856418e6fef732f53f1a11aeec/src/DeTai.jl`; phiên bản Julia: **Julia 1.10+**.
 
 ## Bắt đầu và chạy chương trình
@@ -39,6 +40,17 @@ julia --startup-file=no demo.jl --nhap    # Chế độ nhập dữ liệu trự
 ```
 
 Nhập bàn phím ở chế độ `--nhap` (ví dụ 4 đồ vật của Ví dụ 1): dòng đầu gõ `4 10` (`n` và `W`), dòng thứ hai gõ `5 4 6 3` (`w[1..n]`), dòng thứ ba gõ `10 40 30 50` (`v[1..n]`). Các ca demo `--ca=1` đến `--ca=8` khai báo dữ liệu trực tiếp trong `demo.jl`.
+
+## Trải nghiệm Mô phỏng Trực quan trên Trình duyệt
+
+Đề tài phát triển kèm theo một trang web trực quan hóa giải thuật Cái túi 0/1 chuẩn theo phong cách bài giảng INT1306 mục 4.3 của thầy Hồ Nhựt Minh:
+- 🌐 **Đường link chạy online:** [https://tocanhdatnguyen2k06.github.io/CaiTui01QuyHoachDong/](https://tocanhdatnguyen2k06.github.io/CaiTui01QuyHoachDong/)
+- **Tính năng nổi bật:**
+  - Diễn hoạt từng bước điền bảng quy hoạch động 2D (tô màu xanh dương ô đang tính, màu vàng các ô phụ thuộc).
+  - Diễn hoạt truy vết ngược từng đồ vật kèm giải thích chi tiết tại sao CHỌN hay BỎ QUA.
+  - Tích hợp nút `🎲 Sinh đề bài ngẫu nhiên` để thử nghiệm mọi bộ số ngẫu nhiên.
+  - Công cụ đọ sức hiệu năng trực quan giữa Quy hoạch động $O(n \cdot W)$ và Vét cạn $O(2^n)$.
+  - Hỗ trợ giao diện Chế độ Sáng / Tối (Dark / Light mode).
 
 ## Cấu trúc thư mục dự án
 
