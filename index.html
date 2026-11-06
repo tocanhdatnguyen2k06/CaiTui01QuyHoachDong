@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng f của bài toán cái túi - DT051 - Tô Cảnh Đạt Nguyên</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0A1218',
+                        darkCard: '#111C24',
+                        darkBorder: '#213440'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --nen: #FAFCFD; --mat: #FFFFFF; --chim: #F0F5F8; --vien: #D7E2E9; --vien2: #E7EEF3;
+            --chu: #0F1F29; --chu2: #33505F; --mo: #4E6674; --nhat: #5A7382;
+            --nhan: #0F6E8D;  --nhan-nen: #E4F1F6;  --nhan-vien: #A8D2E2;
+            --luc: #146046;   --luc-nen: #E2F2EA;   --luc-vien: #A6D5BE;
+            --vang: #845806;  --vang-nen: #FBF0DA;  --vang-vien: #E4C68A;
+            --do: #A33C26;    --do-nen: #FBE9E4;    --do-vien: #EEBAAA;
+            --tim: #66399A;   --tim-nen: #F0E9F9;   --tim-vien: #CBB4E6;
+            --o-cho: #E1EAF0;
+        }
+
+        .dark {
+            --nen: #0A1218; --mat: #111C24; --chim: #0E1A21; --vien: #213440; --vien2: #182631;
+            --chu: #E6F0F5; --chu2: #BCD1DD; --mo: #8CA5B4; --nhat: #7C93A4;
+            --nhan: #5CBBDC;  --nhan-nen: #0F2E3B;  --nhan-vien: #1E5872;
+            --luc: #63D69D;   --luc-nen: #0E2E22;   --luc-vien: #1D5A42;
+            --vang: #F0C25A;  --vang-nen: #2C2410;  --vang-vien: #584722;
+            --do: #F2886F;    --do-nen: #301811;    --do-vien: #5E3226;
+            --tim: #C79DF0;   --tim-nen: #221733;   --tim-vien: #43305F;
+            --o-cho: #1F303C;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background-color: var(--nen);
+            color: var(--chu);
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Bảng f dạng lưới chuẩn bài giảng */
+        .bangf {
+            border-collapse: separate;
+            border-spacing: 4px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13.5px;
+            width: auto;
+        }
+        .bangf td, .bangf th {
+            padding: 0;
+            border: 0;
+            text-align: center;
+        }
+        .bangf th {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--nhat);
+            background: none;
+            white-space: nowrap;
+            padding: 3px 4px;
+        }
+        .bangf .nhanh {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--nhat);
+            padding-right: 8px;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        /* Ô giá trị */
+        .bangf td .c {
+            min-width: 36px;
+            height: 32px;
+            padding: 0 4px;
+            display: grid;
+            place-items: center;
+            border-radius: 7px;
+            border: 1.4px solid var(--vien2);
+            background: var(--mat);
+            color: var(--chu2);
+            font-weight: 500;
+            transition: all 0.15s ease;
+        }
+        .bangf td .c.co {
+            border-color: var(--vien);
+            color: var(--chu);
+        }
+        /* Ô đang tính (xanh dương) */
+        .bangf td .c.a {
+            border-color: var(--nhan-vien) !important;
+            background: var(--nhan-nen) !important;
+            color: var(--nhan) !important;
+            font-weight: 700;
+            transform: scale(1.08);
+            box-shadow: 0 0 10px rgba(15, 110, 141, 0.35);
+            z-index: 10;
+        }
+        /* Hai ô mà nó phụ thuộc (vàng) */
+        .bangf td .c.w {
+            border-color: var(--vang-vien) !important;
+            background: var(--vang-nen) !important;
+            color: var(--vang) !important;
+            font-weight: 700;
+        }
+        /* Đường truy vết (tím) */
+        .bangf td .c.v {
+            border-color: var(--tim-vien) !important;
+            background: var(--tim-nen) !important;
+            color: var(--tim) !important;
+            font-weight: 700;
+        }
+        /* Ô đúng kết quả cuối (xanh lá) */
+        .bangf td .c.g {
+            border-color: var(--luc-vien) !important;
+            background: var(--luc-nen) !important;
+            color: var(--luc) !important;
+            font-weight: 700;
+        }
+
+        /* Ba hộp đếm chỉ số */
+        .dem {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 0 0 16px;
+        }
+        .dem .o {
+            border: 1px solid var(--vien);
+            border-radius: 9px;
+            padding: 8px 16px;
+            background: var(--mat);
+            min-width: 110px;
+            transition: all 0.2s ease;
+        }
+        .dem .o .l {
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--nhat);
+            font-weight: 700;
+        }
+        .dem .o .v {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--chu);
+            margin-top: 2px;
+        }
+        .dem .o.a .v { color: var(--nhan); }
+        .dem .o.a { border-color: var(--nhan-vien); background: var(--nhan-nen); }
+        .dem .o.g .v { color: var(--luc); }
+        .dem .o.g { border-color: var(--luc-vien); background: var(--luc-nen); }
+
+        /* Nút điều khiển */
+        .dk {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        .nut {
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid var(--nhan-vien);
+            background: var(--nhan-nen);
+            color: var(--nhan);
+            white-space: nowrap;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+        .nut:hover:not(:disabled) {
+            background: var(--nhan);
+            color: #ffffff;
+        }
+        .nut.phu {
+            border-color: var(--vien);
+            background: var(--mat);
+            color: var(--chu2);
+        }
+        .nut.phu:hover:not(:disabled) {
+            background: var(--chim);
+            color: var(--chu);
+            border-color: var(--nhat);
+        }
+        .nut:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        /* Chú thích màu chân trang */
+        .chu-thich {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+            margin-top: 14px;
+            font-size: 13px;
+            color: var(--mo);
+        }
+        .chu-thich span {
+            display: inline-flex;
+            align-items: center;
+        }
+        .chu-thich i {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            margin-right: 6px;
+            border: 1.4px solid;
+        }
+        .ct-a i { border-color: var(--nhan-vien); background: var(--nhan-nen); }
+        .ct-w i { border-color: var(--vang-vien); background: var(--vang-nen); }
+        .ct-v i { border-color: var(--tim-vien); background: var(--tim-nen); }
+
+        /* Dòng giải thích trạng thái */
+        .trangthai {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            color: var(--chu);
+            padding: 10px 14px;
+            background: var(--chim);
+            border: 1px solid var(--vien2);
+            border-radius: 8px;
+            margin-top: 14px;
+            min-height: 2.8em;
+            line-height: 1.6;
+        }
+        .trangthai b {
+            color: var(--nhan);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Thanh tiêu đề phía trên -->
+    <header class="bg-gradient-to-r from-teal-800 via-cyan-900 to-slate-900 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <span class="bg-teal-500/20 text-teal-300 text-xs px-2.5 py-1 rounded-full font-semibold border border-teal-400/30">
+                    INT13185 · CTDL & GT · Nhóm 03
+                </span>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold">Mô phỏng Quy hoạch động Cái túi 0/1 (0-1 Knapsack)</h1>
+                    <p class="text-xs text-teal-200">Mã đề tài: DT051 · Giảng viên hướng dẫn: Hồ Nhựt Minh</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <!-- Nút bật tắt chế độ Sáng / Tối -->
+                <button onclick="toggleDarkMode()" id="themeToggleBtn" 
+                        class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-medium transition">
+                    <i id="themeIcon" class="fa-solid fa-moon text-amber-300"></i>
+                    <span id="themeText">Chế độ tối</span>
+                </button>
+
+                <div class="bg-white/10 px-3 py-1.5 rounded-lg border border-white/20 text-xs text-right">
+                    <span class="font-bold text-amber-300">Tô Cảnh Đạt Nguyên</span>
+                    <span class="text-slate-300 ml-1">· N24DCDT057</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Khối nội dung chính -->
+    <main class="max-w-7xl mx-auto px-4 py-6 sm:px-6 flex-1 w-full space-y-6">
+
+        <!-- Khối Lý thuyết Thuật toán 4 bước chuẩn giáo trình INT1306 mục 4.3 -->
+        <div class="bg-[var(--mat)] border border-[var(--vien)] rounded-2xl p-5 sm:p-6 shadow-sm space-y-4 transition-colors">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-[var(--vien2)] pb-3">
+                <h2 class="text-lg sm:text-xl font-bold text-[var(--chu)] flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap text-[var(--nhan)] text-lg"></i> Bài toán cái túi (0-1 Knapsack Problem)
+                </h2>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800">
+                    Giáo trình INT1306 · Mục 4.3 Quy hoạch động
+                </span>
+            </div>
+
+            <p class="text-sm text-[var(--chu2)] leading-relaxed">
+                <strong>Bài toán.</strong> Cho <code class="mono font-semibold">n</code> đồ vật, đồ vật thứ <code class="mono font-semibold">i</code> có trọng lượng <code class="mono font-semibold">w<sub>i</sub></code> và giá trị <code class="mono font-semibold">v<sub>i</sub></code>, và một cái túi chứa được tối đa trọng lượng <code class="mono font-semibold">W</code>. Mỗi đồ vật hoặc lấy trọn hoặc không lấy. Chọn tập đồ vật có tổng giá trị lớn nhất.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm">
+                <!-- Bước 1 -->
+                <div class="p-3.5 rounded-xl bg-[var(--chim)] border border-[var(--vien2)] space-y-1">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded font-bold text-[11px] bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300 mono">Bước 1</span>
+                        <span class="font-bold text-[var(--chu)]">Trạng thái (State)</span>
+                    </div>
+                    <p class="text-[var(--chu2)] leading-relaxed text-xs">
+                        <code class="mono font-bold text-sky-700 dark:text-sky-400">f[i][j]</code> là giá trị lớn nhất đạt được khi chỉ được dùng <code class="mono">i</code> đồ vật đầu tiên và sức chứa còn lại của túi là <code class="mono">j</code>.
+                    </p>
+                </div>
+
+                <!-- Bước 3 -->
+                <div class="p-3.5 rounded-xl bg-[var(--chim)] border border-[var(--vien2)] space-y-1">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded font-bold text-[11px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 mono">Bước 3</span>
+                        <span class="font-bold text-[var(--chu)]">Cơ sở (Base Case)</span>
+                    </div>
+                    <p class="text-[var(--chu2)] leading-relaxed text-xs">
+                        <code class="mono font-bold text-emerald-700 dark:text-emerald-400">f[0][j] = 0</code> với mọi <code class="mono">j</code> (không có đồ vật nào thì giá trị = 0). Tính bảng theo <code class="mono">i</code> tăng dần từ 1 đến n.
+                    </p>
+                </div>
+
+                <!-- Bước 2 -->
+                <div class="p-3.5 rounded-xl bg-[var(--chim)] border border-[var(--vien2)] space-y-1.5 md:col-span-2">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded font-bold text-[11px] bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 mono">Bước 2</span>
+                        <span class="font-bold text-[var(--chu)]">Truy hồi (Recurrence Relation)</span>
+                    </div>
+                    <p class="text-[var(--chu2)] text-xs">
+                        Với đồ vật thứ <code class="mono font-semibold">i</code> chỉ có hai khả năng: lấy hoặc không lấy:
+                    </p>
+                    <div class="bg-[var(--mat)] p-2.5 rounded-lg border border-[var(--vien)] mono text-xs space-y-1">
+                        <div>• <span class="text-[var(--nhat)]">f[i][j] =</span> <strong>f[i-1][j]</strong> <span class="text-[var(--mo)]">nếu w<sub>i</sub> &gt; j (không lấy được vì vượt tải trọng)</span></div>
+                        <div>• <span class="text-[var(--nhat)]">f[i][j] =</span> <strong>max( f[i-1][j], f[i-1][j - w<sub>i</sub>] + v<sub>i</sub> )</strong> <span class="text-[var(--mo)]">nếu w<sub>i</sub> &le; j (chọn phương án tối ưu hơn)</span></div>
+                    </div>
+                </div>
+
+                <!-- Bước 4 -->
+                <div class="p-3.5 rounded-xl bg-[var(--chim)] border border-[var(--vien2)] space-y-1 md:col-span-2">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded font-bold text-[11px] bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300 mono">Bước 4</span>
+                        <span class="font-bold text-[var(--chu)]">Truy vết nghiệm (Traceback)</span>
+                    </div>
+                    <p class="text-[var(--chu2)] leading-relaxed text-xs">
+                        Đi từ ô đích <code class="mono font-bold text-purple-700 dark:text-purple-300">f[n][W]</code> ngược lên: nếu <code class="mono font-bold">f[i][j] ≠ f[i-1][j]</code> thì đồ vật <code class="mono font-bold">i</code> đã được lấy, chuyển sang ô <code class="mono font-bold">f[i-1][j - w<sub>i</sub>]</code>; ngược lại chuyển sang <code class="mono font-bold">f[i-1][j]</code>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Mô phỏng Trực quan chính (Thiết kế y hệt slide bài giảng INT1306 mục 4.3) -->
+        <div class="bg-[var(--mat)] border border-[var(--vien)] rounded-2xl p-5 sm:p-6 shadow-sm space-y-5">
+            
+            <!-- Tiêu đề mô phỏng -->
+            <div class="border-b border-[var(--vien)] pb-3 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                <div>
+                    <h2 class="text-lg font-bold text-[var(--chu)]">Bảng f của bài toán cái túi</h2>
+                    <p class="text-xs text-[var(--mo)] mt-0.5">
+                        <span class="text-[var(--nhan)] font-semibold">ô đang tính tô xanh dương</span> · 
+                        <span class="text-[var(--vang)] font-semibold">hai ô nó phụ thuộc tô vàng</span> · 
+                        <span class="text-[var(--tim)] font-semibold">đường truy vết tô tím</span>
+                    </p>
+                </div>
+
+                <!-- Chọn ca thực nghiệm nhanh & Nút sinh ngẫu nhiên -->
+                <div class="flex flex-wrap items-center gap-1.5 text-xs">
+                    <span class="text-[var(--mo)] font-medium mr-1">Ca mẫu:</span>
+                    <button onclick="loadSample(1)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">Ví dụ 1 (W=10)</button>
+                    <button onclick="loadSample(2)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">Ví dụ 2 (W=8)</button>
+                    <button onclick="loadSample(3)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">TK01 (Vừa túi)</button>
+                    <button onclick="loadSample(4)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">TK02 (Cùng W)</button>
+                    <button onclick="loadSample(5)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">BIEN01 (W=0)</button>
+                    <button onclick="loadSample(6)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">BIEN03 (Quá nặng)</button>
+                    
+                    <button onclick="sinhDeBaiNgauNhien()" class="px-2.5 py-1 rounded-md bg-amber-500/20 hover:bg-amber-500/30 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700 font-bold transition flex items-center gap-1 ml-1" title="Tự động tạo ngẫu nhiên một đề bài mới">
+                        🎲 Sinh đề bài ngẫu nhiên
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bảng hiển thị thông số đồ vật (đồ vật, w, v, W) -->
+            <div class="overflow-x-auto">
+                <div id="bangDoVat">
+                    <!-- Được render tự động bằng JS -->
+                </div>
+            </div>
+
+            <!-- Ba hộp chỉ số (GIÁ TRỊ LỚN NHẤT, ĐỒ VẬT ĐƯỢC CHỌN, SỐ Ô ĐÃ ĐIỀN) -->
+            <div class="dem">
+                <div class="o g">
+                    <div class="l">GIÁ TRỊ LỚN NHẤT</div>
+                    <div id="demMaxVal" class="v">—</div>
+                </div>
+                <div class="o">
+                    <div class="l">ĐỒ VẬT ĐƯỢC CHỌN</div>
+                    <div id="demChosen" class="v">—</div>
+                </div>
+                <div class="o a">
+                    <div class="l">SỐ Ô ĐÃ ĐIỀN</div>
+                    <div id="demFilledCells" class="v">1 / 44</div>
+                </div>
+            </div>
+
+            <!-- BỘ NÚT ĐIỀU KHIỂN: ĐẦU - LÙI - CHẠY - TIẾN - CUỐI & NHẢY TRUY VẾT -->
+            <div class="dk bg-[var(--chim)] p-2.5 rounded-xl border border-[var(--vien2)]">
+                <button onclick="boChay.dau()" id="btnDau" class="nut phu" title="Về ô đầu tiên">
+                    <i class="fa-solid fa-backward-step mr-1"></i> đầu
+                </button>
+                <button onclick="boChay.lui()" id="btnLui" class="nut phu" title="Lùi lại 1 bước">
+                    <i class="fa-solid fa-caret-left mr-1"></i> lùi
+                </button>
+                <button onclick="boChay.chay()" id="btnChay" class="nut" title="Chạy tự động các bước">
+                    <span id="txtChay">▶ chạy</span>
+                </button>
+                <button onclick="boChay.toi()" id="btnToi" class="nut phu" title="Tiến tới 1 bước">
+                    tiến <i class="fa-solid fa-caret-right ml-1"></i>
+                </button>
+                <button onclick="boChay.nhayTruyVet()" id="btnNhayTruyVet" class="nut phu border-purple-300 dark:border-purple-700 text-purple-700 dark:text-purple-300" title="Nhảy đến các bước truy vết">
+                    <i class="fa-solid fa-route mr-1"></i> truy vết
+                </button>
+                <button onclick="boChay.cuoi()" id="btnCuoi" class="nut phu" title="Đến kết luận tối ưu cuối cùng">
+                    cuối <i class="fa-solid fa-forward-step ml-1"></i>
+                </button>
+
+                <div class="ml-auto flex items-center gap-3 text-xs text-[var(--mo)]">
+                    <span id="badgeGiaiDoan" class="px-2 py-0.5 rounded font-bold mono bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300">
+                        GĐ 1: Tính bảng DP
+                    </span>
+                    <div class="flex items-center gap-1.5">
+                        <span>Tốc độ:</span>
+                        <select id="selectSpeed" onchange="doiTocDo(this.value)" class="bg-[var(--mat)] border border-[var(--vien)] rounded px-2 py-1 text-[var(--chu)] font-medium">
+                            <option value="400">Chậm (400ms)</option>
+                            <option value="180" selected>Vừa (180ms)</option>
+                            <option value="60">Nhanh (60ms)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bảng f[i][j] \ j dạng lưới -->
+            <div class="overflow-x-auto max-h-[460px] p-2 rounded-xl border border-[var(--vien2)] bg-[var(--nen)]">
+                <div id="khungBangF">
+                    <!-- Bảng được render tự động bằng JS -->
+                </div>
+            </div>
+
+            <!-- Dòng trạng thái & giải thích chi tiết tại sao chọn / bỏ qua / công thức tính -->
+            <div id="trangThaiGhi" class="trangthai">
+                <!-- Nội dung giải thích từng bước -->
+            </div>
+
+            <!-- Chú thích ký hiệu màu bên dưới -->
+            <div class="chu-thich border-t border-[var(--vien2)] pt-3">
+                <span class="ct-a"><i></i>ô đang tính</span>
+                <span class="ct-w"><i></i>ô mà nó phụ thuộc</span>
+                <span class="ct-v"><i></i>đường truy vết</span>
+                <span class="text-xs text-[var(--nhat)] ml-auto">
+                    Quy ước: Hàng i=0 là hàng cơ sở (0 vật), Cột j=0 là túi rỗng (W=0).
+                </span>
+            </div>
+
+        </div>
+
+        <!-- Khối chỉnh sửa dữ liệu tùy ý -->
+        <div class="bg-[var(--mat)] border border-[var(--vien)] rounded-2xl p-5 shadow-sm">
+            <h3 class="text-sm font-bold text-[var(--chu)] mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-sliders text-[var(--nhan)]"></i> Tùy chỉnh thông số bài toán (Nghiệm tự động tính lại ngay lập tức)
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <div>
+                    <label class="block font-semibold text-[var(--mo)] mb-1">Sức chứa tối đa (W):</label>
+                    <input id="customW" type="number" min="0" max="60" value="10" 
+                           class="w-full px-3 py-2 border border-[var(--vien)] rounded-lg bg-[var(--nen)] text-[var(--chu)] mono font-semibold">
+                </div>
+                <div>
+                    <label class="block font-semibold text-[var(--mo)] mb-1">Trọng lượng w (cách bởi dấu phẩy):</label>
+                    <input id="customWList" type="text" value="5, 4, 6, 3" 
+                           class="w-full px-3 py-2 border border-[var(--vien)] rounded-lg bg-[var(--nen)] text-[var(--chu)] mono font-semibold">
+                </div>
+                <div>
+                    <label class="block font-semibold text-[var(--mo)] mb-1">Giá trị v (cách bởi dấu phẩy):</label>
+                    <input id="customVList" type="text" value="10, 40, 30, 50" 
+                           class="w-full px-3 py-2 border border-[var(--vien)] rounded-lg bg-[var(--nen)] text-[var(--chu)] mono font-semibold">
+                </div>
+            </div>
+            <div class="mt-3 flex justify-end">
+                <button onclick="capNhatTuyChinh()" class="nut font-bold px-4 py-2">
+                    <i class="fa-solid fa-rotate mr-1"></i> Áp dụng dữ liệu mới & Vẽ lại bảng
+                </button>
+            </div>
+            <div id="customError" class="hidden mt-2 p-2 rounded bg-red-100 text-red-700 text-xs"></div>
+        </div>
+
+        <!-- Khối Đọ sức thuật toán: Quy hoạch động O(nW) vs Vét cạn O(2^n) -->
+        <div class="bg-[var(--mat)] border border-[var(--vien)] rounded-2xl p-5 sm:p-6 shadow-sm space-y-4 transition-colors">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-[var(--vien2)] pb-3">
+                <h3 class="text-base sm:text-lg font-bold text-[var(--chu)] flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-amber-500"></i> Đọ sức Hiệu năng: Quy hoạch động O(n·W) vs Vét cạn O(2ⁿ)
+                </h3>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                    Phân tích Độ phức tạp thuật toán
+                </span>
+            </div>
+
+            <p class="text-xs text-[var(--chu2)] leading-relaxed">
+                Kéo thanh trượt để chứng kiến hiện tượng <strong>Bùng nổ hàm mũ (Exponential Explosion)</strong> của giải thuật Vét cạn so với sự ổn định tuyệt đối của Quy hoạch động:
+            </p>
+
+            <!-- Thanh điều khiển tham số mô phỏng n và W -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-[var(--chim)] p-4 rounded-xl border border-[var(--vien2)] text-xs">
+                <div>
+                    <div class="flex justify-between font-semibold text-[var(--chu)] mb-1">
+                        <span>Số lượng đồ vật (n):</span>
+                        <span id="sliderNVal" class="mono font-bold text-[var(--nhan)] text-sm">4 đồ vật</span>
+                    </div>
+                    <input id="sliderN" type="range" min="1" max="30" value="4" oninput="capNhatDoDuc()" 
+                           class="w-full accent-teal-600 cursor-pointer">
+                    <div class="flex justify-between text-[10px] text-[var(--mo)] mt-0.5">
+                        <span>n = 1</span>
+                        <span>n = 15</span>
+                        <span>n = 30 (Giới hạn đề tài)</span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between font-semibold text-[var(--chu)] mb-1">
+                        <span>Sức chứa túi (W):</span>
+                        <span id="sliderWVal" class="mono font-bold text-[var(--nhan)] text-sm">W = 10</span>
+                    </div>
+                    <input id="sliderW" type="range" min="1" max="200" value="10" oninput="capNhatDoDuc()" 
+                           class="w-full accent-teal-600 cursor-pointer">
+                    <div class="flex justify-between text-[10px] text-[var(--mo)] mt-0.5">
+                        <span>W = 1</span>
+                        <span>W = 100</span>
+                        <span>W = 200 (Giới hạn đề tài)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bảng so sánh 2 bên -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <!-- Cột Vét cạn -->
+                <div class="p-4 rounded-xl border border-red-200 dark:border-red-900/60 bg-red-50/50 dark:bg-red-950/20 text-center space-y-1">
+                    <div class="text-[11px] font-bold uppercase text-red-600 dark:text-red-400">Vét cạn (Brute Force 2ⁿ)</div>
+                    <div id="resVetCanOps" class="text-xl font-extrabold text-red-700 dark:text-red-300 mono">16</div>
+                    <div class="text-[11px] text-red-600/80 dark:text-red-400/80">phép duyệt tập con</div>
+                    <div id="resVetCanTime" class="text-[10px] font-medium text-red-700 dark:text-red-300 pt-1 border-t border-red-200 dark:border-red-900/50">
+                        Ước tính: &lt; 0.0001 ms
+                    </div>
+                </div>
+
+                <!-- Cột Quy hoạch động -->
+                <div class="p-4 rounded-xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/20 text-center space-y-1">
+                    <div class="text-[11px] font-bold uppercase text-emerald-600 dark:text-emerald-400">Quy hoạch động 2D (O(n·W))</div>
+                    <div id="resQhdOps" class="text-xl font-extrabold text-emerald-700 dark:text-emerald-300 mono">44</div>
+                    <div class="text-[11px] text-emerald-600/80 dark:text-emerald-400/80">ô trong bảng f</div>
+                    <div id="resQhdTime" class="text-[10px] font-medium text-emerald-700 dark:text-emerald-300 pt-1 border-t border-emerald-200 dark:border-emerald-900/50">
+                        Ước tính: &lt; 0.0001 ms
+                    </div>
+                </div>
+
+                <!-- Cột Tốc độ vượt trội -->
+                <div class="p-4 rounded-xl border border-amber-200 dark:border-amber-900/60 bg-amber-50/50 dark:bg-amber-950/20 text-center space-y-1 sm:col-span-1">
+                    <div class="text-[11px] font-bold uppercase text-amber-700 dark:text-amber-400">Độ tăng tốc (Speedup)</div>
+                    <div id="resSpeedupRatio" class="text-xl font-extrabold text-amber-600 dark:text-amber-400 mono">QHĐ ~ Vét cạn</div>
+                    <div class="text-[11px] text-amber-700/80 dark:text-amber-400/80" id="resSpeedupSub">khi n còn nhỏ</div>
+                    <div id="resSpeedupComment" class="text-[10px] font-medium text-amber-800 dark:text-amber-300 pt-1 border-t border-amber-200 dark:border-amber-900/50">
+                        Thử kéo n lên 25 hoặc 30!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Chân trang -->
+    <footer class="border-t border-[var(--vien)] py-3 text-center text-xs text-[var(--mo)] bg-[var(--mat)]">
+        Đồ án môn Cấu trúc Dữ liệu và Giải thuật · GVHD: <strong>Hồ Nhựt Minh</strong> · Sinh viên thực hiện: <strong>Tô Cảnh Đạt Nguyên - N24DCDT057</strong>
+    </footer>
+
+    <!-- Toàn bộ JavaScript thuật toán & Diễn hoạt khung hình -->
+    <script>
+        // Dữ liệu mặc định
+        let w = [5, 4, 6, 3];
+        let v = [10, 40, 30, 50];
+        let W = 10;
+        let ketQuaTui = null;
+        let tocDoChay = 180;
+
+        // Quản lý theme Sáng / Tối
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById("themeIcon");
+            const themeText = document.getElementById("themeText");
+
+            if (html.classList.contains("dark")) {
+                html.classList.remove("dark");
+                localStorage.setItem("theme", "light");
+                themeIcon.className = "fa-solid fa-moon text-amber-300";
+                themeText.innerText = "Chế độ tối";
+            } else {
+                html.classList.add("dark");
+                localStorage.setItem("theme", "dark");
+                themeIcon.className = "fa-solid fa-sun text-amber-400";
+                themeText.innerText = "Chế độ sáng";
+            }
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem("theme");
+            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            const html = document.documentElement;
+            const themeIcon = document.getElementById("themeIcon");
+            const themeText = document.getElementById("themeText");
+
+            if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+                html.classList.add("dark");
+                themeIcon.className = "fa-solid fa-sun text-amber-400";
+                themeText.innerText = "Chế độ sáng";
+            } else {
+                html.classList.remove("dark");
+                themeIcon.className = "fa-solid fa-moon text-amber-300";
+                themeText.innerText = "Chế độ tối";
+            }
+        }
+
+        // Ca mẫu
+        const samples = {
+            1: { W: 10, w: [5, 4, 6, 3], v: [10, 40, 30, 50] },
+            2: { W: 8,  w: [3, 4, 5],    v: [4, 5, 6] },
+            3: { W: 10, w: [1, 2, 3],    v: [10, 20, 30] },
+            4: { W: 5,  w: [5, 5],       v: [20, 50] },
+            5: { W: 0,  w: [2, 3],       v: [10, 20] },
+            6: { W: 4,  w: [5, 6, 7],    v: [10, 20, 30] }
+        };
+
+        function loadSample(id) {
+            const s = samples[id];
+            document.getElementById("customW").value = s.W;
+            document.getElementById("customWList").value = s.w.join(", ");
+            document.getElementById("customVList").value = s.v.join(", ");
+            capNhatTuyChinh();
+        }
+
+        function capNhatTuyChinh() {
+            const errDiv = document.getElementById("customError");
+            errDiv.classList.add("hidden");
+            try {
+                const newW = parseInt(document.getElementById("customW").value);
+                if (isNaN(newW) || newW < 0) throw new Error("W phải là số nguyên không âm (≥ 0)");
+                if (newW > 40) throw new Error("Để giao diện hiển thị bảng đẹp mắt trên màn hình, hãy chọn W ≤ 40");
+
+                const newWList = document.getElementById("customWList").value.split(",").map(x => parseInt(x.trim())).filter(x => !isNaN(x));
+                const newVList = document.getElementById("customVList").value.split(",").map(x => parseInt(x.trim())).filter(x => !isNaN(x));
+
+                if (newWList.length === 0 || newWList.length !== newVList.length) {
+                    throw new Error("Mảng w và v phải có số phần tử bằng nhau và lớn hơn 0!");
+                }
+                for (let i = 0; i < newWList.length; i++) {
+                    if (newWList[i] <= 0) throw new Error(`Trọng lượng w[${i+1}] phải > 0`);
+                    if (newVList[i] < 0) throw new Error(`Giá trị v[${i+1}] phải ≥ 0`);
+                }
+
+                w = newWList;
+                v = newVList;
+                W = newW;
+
+                khoiTaoMoPhong();
+            } catch (err) {
+                errDiv.innerText = err.message;
+                errDiv.classList.remove("hidden");
+            }
+        }
+
+        // ==========================================
+        // TÍNH NĂNG 1: SINH ĐỀ BÀI NGẪU NHIÊN
+        // ==========================================
+        function sinhDeBaiNgauNhien() {
+            // Sinh ngẫu nhiên n từ 3 đến 5 đồ vật
+            const randomN = Math.floor(Math.random() * 3) + 3;
+            // Sinh ngẫu nhiên W từ 8 đến 16
+            const randomW = Math.floor(Math.random() * 9) + 8;
+            
+            const randomWList = [];
+            const randomVList = [];
+            for (let i = 0; i < randomN; i++) {
+                const maxWItem = Math.max(3, Math.floor(randomW * 0.6));
+                const itemW = Math.floor(Math.random() * (maxWItem - 2 + 1)) + 2;
+                const itemV = (Math.floor(Math.random() * 10) + 2) * 5;
+                randomWList.push(itemW);
+                randomVList.push(itemV);
+            }
+            
+            document.getElementById("customW").value = randomW;
+            document.getElementById("customWList").value = randomWList.join(", ");
+            document.getElementById("customVList").value = randomVList.join(", ");
+            capNhatTuyChinh();
+        }
+
+        // ==========================================
+        // TÍNH NĂNG 2: ĐỌ SỨC HIỆU NĂNG QHĐ VS VÉT CẠN 2^N
+        // ==========================================
+        function capNhatDoDuc() {
+            const n = parseInt(document.getElementById("sliderN").value);
+            const W_val = parseInt(document.getElementById("sliderW").value);
+            
+            document.getElementById("sliderNVal").innerText = `${n} đồ vật`;
+            document.getElementById("sliderWVal").innerText = `W = ${W_val}`;
+            
+            // Vét cạn: 2^n
+            const opsVetCan = Math.pow(2, n);
+            // QHĐ: n * (W + 1)
+            const opsQhd = n * (W_val + 1);
+            
+            const formattedVetCan = opsVetCan > 1e9 ? opsVetCan.toExponential(2) : opsVetCan.toLocaleString("vi-VN");
+            const formattedQhd = opsQhd.toLocaleString("vi-VN");
+            
+            document.getElementById("resVetCanOps").innerText = formattedVetCan;
+            document.getElementById("resQhdOps").innerText = formattedQhd;
+            
+            // Ước tính thời gian thực hiện (giả sử CPU chạy 10^8 phép tính/giây)
+            const tVetCanSec = opsVetCan / 1e8;
+            let tVetCanText = "< 0.0001 ms";
+            if (tVetCanSec >= 86400 * 365) {
+                tVetCanText = `~${(tVetCanSec / (86400 * 365)).toFixed(1)} năm (Bất khả thi!)`;
+            } else if (tVetCanSec >= 86400) {
+                tVetCanText = `~${(tVetCanSec / 86400).toFixed(1)} ngày`;
+            } else if (tVetCanSec >= 60) {
+                tVetCanText = `~${(tVetCanSec / 60).toFixed(1)} phút`;
+            } else if (tVetCanSec >= 1) {
+                tVetCanText = `~${tVetCanSec.toFixed(2)} giây`;
+            } else if (tVetCanSec >= 0.001) {
+                tVetCanText = `~${(tVetCanSec * 1000).toFixed(1)} ms`;
+            }
+            document.getElementById("resVetCanTime").innerText = `Ước tính: ${tVetCanText}`;
+            
+            document.getElementById("resQhdTime").innerText = `Ước tính: < 0.001 ms (Tức thì)`;
+            
+            // Tỉ số tăng tốc
+            const ratio = opsVetCan / opsQhd;
+            if (ratio >= 1000) {
+                document.getElementById("resSpeedupRatio").innerText = `${ratio > 1e7 ? ratio.toExponential(2) : Math.round(ratio).toLocaleString("vi-VN")}x`;
+                document.getElementById("resSpeedupSub").innerText = "Nhanh hơn gấp bội";
+                document.getElementById("resSpeedupComment").innerHTML = `<strong class="text-emerald-600 dark:text-emerald-400">QHĐ chiến thắng áp đảo!</strong>`;
+            } else if (ratio >= 1) {
+                document.getElementById("resSpeedupRatio").innerText = `${ratio.toFixed(1)}x`;
+                document.getElementById("resSpeedupSub").innerText = "nhanh hơn vét cạn";
+                document.getElementById("resSpeedupComment").innerText = "Kéo n lên 25 hoặc 30 để thấy bùng nổ!";
+            } else {
+                document.getElementById("resSpeedupRatio").innerText = "~ Ngang nhau";
+                document.getElementById("resSpeedupSub").innerText = "khi n rất nhỏ";
+                document.getElementById("resSpeedupComment").innerText = "Kéo n lên để thấy sức mạnh QHĐ!";
+            }
+        }
+
+        // ==========================================
+        // THUẬT TOÁN QUY HOẠCH ĐỘNG CÁI TÚI 2D & KHUNG HÌNH
+        // Chuẩn cấu trúc bài giảng INT1306 mục 4.3:
+        // Giai đoạn 1: Điền bảng DP từng ô
+        // Giai đoạn 2: Truy vết từng bước (giải thích tại sao chọn / bỏ qua)
+        // ==========================================
+        function tinhCaiTui(w, v, W) {
+            const n = w.length, f = [], khung = [];
+            
+            // Khởi tạo hàng 0 với các giá trị 0
+            for (let i = 0; i <= n; i++) f.push(new Array(W + 1).fill(0));
+
+            // GIAI ĐOẠN 1: Duyệt từng ô: Hàng i từ 1 đến n, Cột j từ 0 đến W
+            for (let i = 1; i <= n; i++) {
+                for (let j = 0; j <= W; j++) {
+                    const khong = f[i - 1][j];
+                    let co = null;
+                    f[i][j] = khong;
+                    
+                    if (w[i - 1] <= j) {
+                        co = f[i - 1][j - w[i - 1]] + v[i - 1];
+                        f[i][j] = Math.max(khong, co);
+                    }
+
+                    khung.push({
+                        giaiDoan: 'tinh_toan',
+                        i, 
+                        j, 
+                        f: f.map(r => r.slice()), 
+                        khong, 
+                        co, 
+                        lay: co !== null && co > khong,
+                        ghi: co === null 
+                            ? `w${i} = ${w[i - 1]} > ${j} → không lấy được vật ${i}, chép xuống <b>f[${i - 1}][${j}] = ${khong}</b>`
+                            : `không lấy: ${khong} · lấy: f[${i - 1}][${j - w[i - 1]}] + ${v[i - 1]} = ${co} → <b>chọn ${f[i][j]}</b>`
+                    });
+                }
+            }
+
+            // GIAI ĐOẠN 2: TRUY VẾT TỪNG BƯỚC (STEP-BY-STEP TRACEBACK)
+            const indexTruyVet = khung.length;
+            const chon = []; 
+            let curr_j = W;
+            const vet = [[n, W]];
+
+            // Bước 2.0: Bắt đầu tại ô đích f[n][W]
+            khung.push({
+                giaiDoan: 'truy_vet',
+                i_xet: n,
+                cur_i: n,
+                cur_j: W,
+                above_i: n - 1,
+                above_j: W,
+                f: f.map(r => r.slice()),
+                vet: [[n, W]],
+                chon: [],
+                ghi: `<b>Bắt đầu Truy vết:</b> Xuất phát từ ô đích <b>f[${n}][${W}] = ${f[n][W]}</b> (giá trị tối đa đạt được). Ta so sánh ô này với ô ngay trên nó <b>f[${n-1}][${W}] = ${f[n-1][W]}</b> để xác định xem đồ vật ${n} có được chọn hay không.`
+            });
+
+            // Duyệt từng đồ vật i từ n lùi về 1
+            for (let i = n; i >= 1; i--) {
+                const wi = w[i - 1];
+                const vi = v[i - 1];
+                const valCurrent = f[i][curr_j];
+                const valAbove = f[i - 1][curr_j];
+                const daChon = (valCurrent !== valAbove);
+
+                if (daChon) {
+                    chon.push(i);
+                    const next_j = curr_j - wi;
+                    vet.push([i - 1, next_j]);
+
+                    khung.push({
+                        giaiDoan: 'truy_vet',
+                        i_xet: i,
+                        cur_i: i,
+                        cur_j: curr_j,
+                        above_i: i - 1,
+                        above_j: curr_j,
+                        daChon: true,
+                        f: f.map(r => r.slice()),
+                        vet: vet.slice(),
+                        chon: chon.slice().sort((x, y) => x - y),
+                        ghi: `<b>Truy vết đồ vật ${i}:</b> So sánh f[${i}][${curr_j}] (<b>${valCurrent}</b>) ≠ f[${i-1}][${curr_j}] (<b>${valAbove}</b>)<br>
+                              ➔ <span class="text-emerald-600 font-bold">LÝ DO CHỌN ĐỒ VẬT ${i}:</span> Giá trị tại ô này lớn hơn ô trên nó, chứng tỏ phương án tối ưu bắt buộc phải lấy đồ vật ${i} (w=${wi}, v=${vi}).<br>
+                              ➔ <i>Cập nhật túi:</i> Tải trọng túi còn lại: ${curr_j} − ${wi} = <b>${next_j}</b>. Lùi lên ô tiếp theo <b>f[${i-1}][${next_j}]</b>.`
+                    });
+                    curr_j = next_j;
+                } else {
+                    vet.push([i - 1, curr_j]);
+
+                    khung.push({
+                        giaiDoan: 'truy_vet',
+                        i_xet: i,
+                        cur_i: i,
+                        cur_j: curr_j,
+                        above_i: i - 1,
+                        above_j: curr_j,
+                        daChon: false,
+                        f: f.map(r => r.slice()),
+                        vet: vet.slice(),
+                        chon: chon.slice().sort((x, y) => x - y),
+                        ghi: `<b>Truy vết đồ vật ${i}:</b> So sánh f[${i}][${curr_j}] (<b>${valCurrent}</b>) == f[${i-1}][${curr_j}] (<b>${valAbove}</b>)<br>
+                              ➔ <span class="text-orange-600 font-bold">LÝ DO BỎ QUA ĐỒ VẬT ${i}:</span> Giá trị không đổi so với ô trên nó, chứng tỏ việc lấy thêm đồ vật ${i} (w=${wi}, v=${vi}) không làm tăng thêm giá trị (hoặc tải trọng không tối ưu bằng phương án trước).<br>
+                              ➔ <i>Cập nhật túi:</i> Tải trọng giữ nguyên: <b>${curr_j}</b>. Lùi lên ô tiếp theo <b>f[${i-1}][${curr_j}]</b>.`
+                    });
+                }
+            }
+
+            // Bước cuối: Kết luận tập nghiệm tối ưu
+            const chonSort = chon.slice().sort((x, y) => x - y);
+            const tongW = chonSort.reduce((sum, idx) => sum + w[idx - 1], 0);
+
+            khung.push({
+                giaiDoan: 'ket_luan',
+                i_xet: 0,
+                cur_i: 0,
+                cur_j: curr_j,
+                above_i: null,
+                above_j: null,
+                f: f.map(r => r.slice()),
+                vet: vet.slice(),
+                chon: chonSort,
+                ghi: `🏆 <b>KẾT LUẬN TỐI ƯU HOÀN TẤT:</b> Quá trình truy vết đã lùi về hàng cơ sở i = 0.<br>
+                      ➔ <b>Danh sách đồ vật được chọn:</b> <b class="text-emerald-600 text-sm">[${chonSort.join(", ")}]</b><br>
+                      ➔ <b>Giá trị lớn nhất đạt được:</b> <b class="text-amber-600 text-sm">${f[n][W]}</b><br>
+                      ➔ <b>Tổng tải trọng thực tế đã dùng:</b> <b>${tongW} / ${W}</b>.`
+            });
+
+            return {
+                khung, 
+                f, 
+                giaTri: f[n][W], 
+                chon: chonSort, 
+                vet,
+                indexTruyVet
+            };
+        }
+
+        // ==========================================
+        // VẼ BẢNG F DẠNG LƯỚI
+        // ==========================================
+        function veBangF(dong, cot, gt, mau, nhanDong, nhanCot, tenGoc) {
+            let s = '<table class="bangf"><thead><tr><th>' + (tenGoc || "") + "</th>";
+            for (let j = 0; j < cot; j++) s += `<th>${nhanCot ? nhanCot[j] : j}</th>`;
+            s += "</tr></thead><tbody>";
+
+            for (let i = 0; i < dong; i++) {
+                s += `<tr><td class="nhanh">${nhanDong ? nhanDong[i] : i}</td>`;
+                for (let j = 0; j < cot; j++) {
+                    const m = mau && mau[i] && mau[i][j] ? mau[i][j] : "";
+                    s += `<td><div class="c ${m}">${gt[i][j]}</div></td>`;
+                }
+                s += "</tr>";
+            }
+            return s + "</tbody></table>";
+        }
+
+        // ==========================================
+        // BỘ ĐIỀU KHIỂN CHẠY CÁC BƯỚC (BỘ CHẠY KHUNG HÌNH)
+        // ==========================================
+        const boChay = {
+            k: 0,
+            timer: null,
+            
+            soKhung() {
+                return ketQuaTui ? ketQuaTui.khung.length : 0;
+            },
+
+            di(buoc) {
+                const n = this.soKhung();
+                if (n === 0) return;
+                this.k = Math.max(0, Math.min(n - 1, buoc));
+                this.veKhung(this.k);
+                this.capNhatNut();
+            },
+
+            toi() {
+                this.dung();
+                this.di(this.k + 1);
+            },
+
+            lui() {
+                this.dung();
+                this.di(this.k - 1);
+            },
+
+            dau() {
+                this.dung();
+                this.di(0);
+            },
+
+            cuoi() {
+                this.dung();
+                this.di(this.soKhung() - 1);
+            },
+
+            nhayTruyVet() {
+                this.dung();
+                if (ketQuaTui && ketQuaTui.indexTruyVet !== undefined) {
+                    this.di(ketQuaTui.indexTruyVet);
+                }
+            },
+
+            chay() {
+                if (this.timer) {
+                    this.dung();
+                } else {
+                    if (this.k >= this.soKhung() - 1) {
+                        this.k = 0;
+                        this.di(0);
+                    }
+                    this.timer = setInterval(() => {
+                        if (this.k < this.soKhung() - 1) {
+                            this.k++;
+                            this.veKhung(this.k);
+                            this.capNhatNut();
+                        } else {
+                            this.dung();
+                        }
+                    }, tocDoChay);
+                    this.capNhatTrangThaiChay(true);
+                }
+            },
+
+            dung() {
+                if (this.timer) {
+                    clearInterval(this.timer);
+                    this.timer = null;
+                }
+                this.capNhatTrangThaiChay(false);
+            },
+
+            capNhatTrangThaiChay(isChay) {
+                const txt = document.getElementById("txtChay");
+                const btn = document.getElementById("btnChay");
+                if (isChay) {
+                    txt.innerText = "⏸ dừng";
+                    btn.classList.add("bg-teal-600", "text-white");
+                } else {
+                    txt.innerText = "▶ chạy";
+                    btn.classList.remove("bg-teal-600", "text-white");
+                }
+            },
+
+            capNhatNut() {
+                const n = this.soKhung();
+                document.getElementById("btnDau").disabled = (this.k === 0);
+                document.getElementById("btnLui").disabled = (this.k === 0);
+                document.getElementById("btnToi").disabled = (this.k === n - 1);
+                document.getElementById("btnCuoi").disabled = (this.k === n - 1);
+            },
+
+            veKhung(k) {
+                if (!ketQuaTui) return;
+                const f = ketQuaTui.khung[k];
+                const tongO = w.length * (W + 1);
+                const badge = document.getElementById("badgeGiaiDoan");
+
+                // Ma trận màu
+                const mau = [];
+                for (let i = 0; i <= w.length; i++) mau.push(new Array(W + 1).fill(""));
+
+                if (f.giaiDoan === 'truy_vet' || f.giaiDoan === 'ket_luan') {
+                    // === GIAI ĐOẠN 2: TRUY VẾT TỪNG BƯỚC ===
+                    if (f.giaiDoan === 'ket_luan') {
+                        badge.innerText = "🏆 Kết luận tối ưu";
+                        badge.className = "px-2 py-0.5 rounded font-bold mono bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300";
+                    } else {
+                        badge.innerText = `GĐ 2: Truy vết vật ${f.i_xet}`;
+                        badge.className = "px-2 py-0.5 rounded font-bold mono bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-300";
+                    }
+
+                    // Bảng DP đã tính xong toàn bộ nên hiển thị hết tất cả giá trị
+                    const gt = f.f.map(r => r.slice());
+
+                    // Tô màu các ô trong đường truy vết
+                    if (f.vet) {
+                        f.vet.forEach(([vi, vj]) => {
+                            if (vi >= 0) mau[vi][vj] = "v"; // Đường truy vết màu tím
+                        });
+                    }
+
+                    // Highlight ô so sánh phía trên (màu vàng) nếu có
+                    if (f.above_i !== null && f.above_j !== null) {
+                        mau[f.above_i][f.above_j] = "w"; // Ô phía trên để so sánh
+                    }
+
+                    // Highlight ô đang xét (màu xanh dương hoặc tím nổi bật)
+                    if (f.cur_i !== null && f.cur_j !== null) {
+                        mau[f.cur_i][f.cur_j] = (f.daChon ? "g" : "v"); // Xanh lá nếu chọn, tím nếu đang xét
+                    }
+
+                    // Cập nhật 3 hộp chỉ số
+                    document.getElementById("demMaxVal").innerText = ketQuaTui.giaTri;
+                    document.getElementById("demChosen").innerText = f.chon.length > 0 ? f.chon.join(", ") : "—";
+                    
+                    const buocTV = (f.giaiDoan === 'ket_luan') ? (w.length + 1) : (w.length - f.i_xet + 1);
+                    document.getElementById("demFilledCells").innerText = `TV: ${buocTV} / ${w.length + 1}`;
+
+                    // Render bảng
+                    const nhanDong = ["i=0"].concat(w.map((_, i) => `i=${i + 1}`));
+                    document.getElementById("khungBangF").innerHTML = veBangF(
+                        w.length + 1, 
+                        W + 1, 
+                        gt, 
+                        mau, 
+                        nhanDong, 
+                        null, 
+                        "f[i][j] \\ j"
+                    );
+
+                } else {
+                    // === GIAI ĐOẠN 1: ĐIỀN BẢNG DP TỪNG Ô ===
+                    badge.innerText = "GĐ 1: Tính bảng DP";
+                    badge.className = "px-2 py-0.5 rounded font-bold mono bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300";
+
+                    // Những ô chưa tính hiển thị "·"
+                    const gt = f.f.map((r, i) => r.map((x, j) => {
+                        const daTinh = i < f.i || (i === f.i && j <= f.j) || i === 0;
+                        return daTinh ? x : "·";
+                    }));
+
+                    if (f.i !== null) {
+                        mau[f.i][f.j] = "a"; // Ô đang tính tô xanh dương
+                        mau[f.i - 1][f.j] = "w"; // Ô phía trên tô vàng
+                        if (f.co !== null) {
+                            mau[f.i - 1][f.j - w[f.i - 1]] = "w"; // Ô f[i-1][j-wi] tô vàng
+                        }
+                    }
+
+                    document.getElementById("demMaxVal").innerText = "—";
+                    document.getElementById("demChosen").innerText = "—";
+
+                    const soODaDien = (f.i - 1) * (W + 1) + f.j + 1;
+                    document.getElementById("demFilledCells").innerText = `${soODaDien} / ${tongO}`;
+
+                    // Render bảng
+                    const nhanDong = ["i=0"].concat(w.map((_, i) => `i=${i + 1}`));
+                    document.getElementById("khungBangF").innerHTML = veBangF(
+                        w.length + 1, 
+                        W + 1, 
+                        gt, 
+                        mau, 
+                        nhanDong, 
+                        null, 
+                        "f[i][j] \\ j"
+                    );
+                }
+
+                // Cập nhật text giải thích
+                document.getElementById("trangThaiGhi").innerHTML = f.ghi;
+            }
+        };
+
+        function doiTocDo(val) {
+            tocDoChay = parseInt(val);
+            if (boChay.timer) {
+                boChay.dung();
+                boChay.chay();
+            }
+        }
+
+        // ==========================================
+        // KHỞI TẠO BẢNG ĐỒ VẬT VÀ MÔ PHỎNG
+        // ==========================================
+        function renderBangDoVat() {
+            let html = '<table class="bangf" style="border-spacing:3px 4px"><thead><tr><th>đồ vật</th>';
+            html += w.map((_, i) => `<th>${i + 1}</th>`).join("");
+            html += '</tr></thead><tbody>';
+
+            html += '<tr><td class="nhanh">trọng lượng w</td>';
+            html += w.map(x => `<td><div class="c co font-bold">${x}</div></td>`).join("");
+            html += '</tr>';
+
+            html += '<tr><td class="nhanh">giá trị v</td>';
+            html += v.map(x => `<td><div class="c co font-bold">${x}</div></td>`).join("");
+            html += '</tr></tbody></table>';
+
+            html += `<p class="text-xs text-[var(--mo)] mt-2 font-medium">Sức chứa W = <strong>${W}</strong>. Tổng số đồ vật n = <strong>${w.length}</strong>.</p>`;
+
+            document.getElementById("bangDoVat").innerHTML = html;
+        }
+
+        function khoiTaoMoPhong() {
+            boChay.dung();
+            renderBangDoVat();
+            ketQuaTui = tinhCaiTui(w, v, W);
+            boChay.di(0);
+        }
+
+        // Tải trang lần đầu
+        window.onload = () => {
+            initTheme();
+            khoiTaoMoPhong();
+            capNhatDoDuc();
+        };
+    </script>
+</body>
+</html>
