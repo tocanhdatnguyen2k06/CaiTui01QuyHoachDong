@@ -11,7 +11,7 @@ Toàn bộ thuật toán quy hoạch động, truy vết, kiểm tra hợp đồ
 - Giáo trình: `Giao-trinh-Cau-truc-du-lieu-va-Giai-thuat-INT1306.pdf`.
 - Chương, mục, bài tập, trang in và trang PDF đúng đề: Chương 4, mục **4.3.2.2 Bài toán cái túi**; Ví dụ 4.8; Bài 4.3; Bài tập chương 4, câu 22 và 32; trang in 98–100, 103, 112; trang PDF 110–112, 115, 124.
 - URL GitHub thật: `https://github.com/tocanhdatnguyen2k06/CaiTui01QuyHoachDong`; SHA chạy C ghi trong báo cáo và tệp `N24DCDT057_DT051_ToCanhDatNguyen_ThongTinNop.txt` nộp rời.
-- Permalink tệp thuật toán tại C: `https://github.com/tocanhdatnguyen2k06/CaiTui01QuyHoachDong/blob/main/src/DeTai.jl`; phiên bản Julia: **Julia 1.10+**.
+- Permalink tệp thuật toán tại C: `https://github.com/tocanhdatnguyen2k06/CaiTui01QuyHoachDong/blob/9cccb550b30662856418e6fef732f53f1a11aeec/src/DeTai.jl`; phiên bản Julia: **Julia 1.10+**.
 
 ## Bắt đầu và chạy chương trình
 
@@ -25,7 +25,7 @@ julia --startup-file=no demo.jl
 julia --startup-file=no test/runtests.jl
 ```
 
-Chạy riêng từng ві dụ hoặc từng ca minh họa từ A01 đến A08:
+Chạy riêng từng ví dụ hoặc từng ca minh họa từ A01 đến A08:
 
 ```powershell
 julia --startup-file=no vidu1.jl          # Chạy riêng Ví dụ 1 trên phiếu (Ảnh A01 - Hình 4.1)
@@ -35,6 +35,25 @@ julia --startup-file=no demo.jl --nhap    # Chế độ nhập dữ liệu trự
 ```
 
 Nhập bàn phím ở chế độ `--nhap` (ví dụ 4 đồ vật của Ví dụ 1): dòng đầu gõ `4 10` (`n` và `W`), dòng thứ hai gõ `5 4 6 3` (`w[1..n]`), dòng thứ ba gõ `10 40 30 50` (`v[1..n]`). Các ca demo `--ca=1` đến `--ca=8` khai báo dữ liệu trực tiếp trong `demo.jl`.
+
+## Cấu trúc thư mục dự án
+
+```text
+N24DCDT057_DT051_ToCanhDatNguyen/
+├── .gitignore                      # Cấu hình bỏ qua các tệp tạm và bộ nhớ đệm
+├── demo.jl                         # Chạy minh họa các ca (--ca=1..8) và nhập liệu bàn phím (--nhap)
+├── README.md                       # Hướng dẫn chi tiết, căn cứ đề tài và cách chạy nghiệm thu
+├── requirements.txt                # Khai báo môi trường và phiên bản (Julia >= 1.10)
+├── vidu1.jl                        # Kịch bản chạy riêng Ví dụ 1 trên phiếu (Ảnh A01 - Hình 4.1)
+├── vidu2.jl                        # Kịch bản chạy riêng Ví dụ 2 trên phiếu (Ảnh A02 - Hình 4.2)
+├── docs/
+│   └── anh_ket_qua/
+│       └── README.md               # Quy cách đặt tên và danh mục 11 ảnh minh chứng cá nhân (A01-A11)
+├── src/
+│   └── DeTai.jl                    # Thuật toán chính: cai_tui_bang, truy_vet_do, kiem_tra_dau_vao, v.v.
+└── test/
+    └── runtests.jl                 # Bộ kiểm thử tự động 12 ca độc lập (T01-T12, 41/41 test PASS)
+```
 
 ## Hợp đồng bài toán
 
