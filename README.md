@@ -68,7 +68,7 @@ N24DCDT057_DT051_ToCanhDatNguyen/
 ├── src/
 │   └── DeTai.jl                    # Thuật toán chính: cai_tui_bang, truy_vet_do, kiem_tra_dau_vao, v.v.
 └── test/
-    └── runtests.jl                 # Bộ kiểm thử tự động 12 ca độc lập (T01-T12, 41/41 test PASS)
+    └── runtests.jl                 # Bộ kiểm thử tự động 12 ca độc lập (VD01 -> KT12, 41/41 test PASS)
 ```
 
 ## Hợp đồng bài toán
@@ -87,8 +87,8 @@ N24DCDT057_DT051_ToCanhDatNguyen/
 | `demo.jl` | Chạy mặc định 2 ví dụ trên phiếu, 8 ca minh họa (`--ca=1` đến `--ca=8`) và chế độ nhập bàn phím (`--nhap`) |
 | `vidu1.jl` | Chạy riêng Ví dụ 1 trên phiếu (`n=4, W=10, w=[5,4,6,3], v=[10,40,30,50]`) phục vụ chụp Ảnh A01 |
 | `vidu2.jl` | Chạy riêng Ví dụ 2 trên phiếu (`n=3, W=8, w=[3,4,5], v=[4,5,6]`) phục vụ chụp Ảnh A02 |
-| `test/runtests.jl` | 12 ca kiểm thử độc lập có định danh (`T01` đến `T12`), tổng cộng 41 phép kiểm tra `@test` / `@test_throws` |
-| `docs/anh_ket_qua/` | Thư mục lưu trữ 11 ảnh minh chứng thực chạy cá nhân từ A01 đến A11 |
+| `test/runtests.jl` | 12 ca kiểm thử độc lập có định danh (`VD01`, `VD02`, `TK01`, `TK02`, `BIEN01..03`, `LOI01`, `KT09..12`), tổng cộng 41 phép kiểm tra `@test` / `@test_throws` |
+| `docs/anh_ket_qua/` | Thư mục lưu trữ 11 ảnh minh chứng thực chạy cá nhân từ A01 đến A11 (`01_vi_du_1.png` đến `11_github_repo_commit.png`) |
 
 Kết quả 8 ca trong `demo.jl`:
 - Demo 1 (`--ca=1`, Ví dụ 1 phiếu / Ca 5 phiếu): giá trị tối ưu `90`, chọn `[2, 4]`, trọng lượng `7 / 10`.

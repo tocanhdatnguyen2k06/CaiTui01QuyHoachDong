@@ -17,7 +17,7 @@ v1 = [10, 40, 30, 50]
 W1 = 10
 
 val1, chon1, f1, tw1 = in_ket_qua_chi_tiet(
-    "HÌNH 4.1 (ẢNH A01) - VÍ DỤ 1 TRÊN PHIẾU (CA KIỂM THỬ T01 / VD01)",
+    "HÌNH 4.1 (ẢNH A01) - VÍ DỤ 1 TRÊN PHIẾU (CA KIỂM THỬ VD01)",
     w1, v1, W1;
     in_bang = true
 )
@@ -26,4 +26,3 @@ println("\nĐối chiếu Expected trên phiếu DT051:")
 println("  - Expected: Giá trị tối ưu = 90, ID chọn = [2, 4], tổng trọng lượng = 7")
 println("  - Giải thích: Đồ 2 và 4 cho 40 + 50 = 90, trọng lượng 4 + 3 = 7 <= 10 (không bắt buộc dùng hết sức chứa).")
 println("  - Kết luận: ", (val1 == 90 && chon1 == [2, 4] && tw1 == 7) ? ">>> PASS (ĐÚNG 100%) <<<" : "FAIL")
-

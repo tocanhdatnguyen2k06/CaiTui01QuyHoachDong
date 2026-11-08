@@ -33,7 +33,7 @@ end
 
 function minh_hoa_du_lieu_sai()
     println("==========================================================================")
-    println("  HÌNH 4.8 (ẢNH A08) - KIỂM TRA INPUT KHÔNG HỢP LỆ (CA T12 / LOI01)")
+    println("  HÌNH 4.8 (ẢNH A08) - KIỂM TRA INPUT KHÔNG HỢP LỆ (CA LOI01)")
     println("==========================================================================")
     cac_ca_loi = [
         ("Vi phạm 1: Sức chứa túi âm (W = -5 < 0)", 1, -5, [2], [3]),
@@ -60,19 +60,19 @@ end
 
 function chay_theo_ca(ca::String)
     if ca == "--ca=1"
-        in_ket_qua_chi_tiet("HÌNH 4.1 (ẢNH A01) - VÍ DỤ 1 TRÊN PHIẾU (T01 / VD01)", [5, 4, 6, 3], [10, 40, 30, 50], 10)
+        in_ket_qua_chi_tiet("HÌNH 4.1 (ẢNH A01) - VÍ DỤ 1 TRÊN PHIẾU (VD01)", [5, 4, 6, 3], [10, 40, 30, 50], 10)
     elseif ca == "--ca=2"
-        in_ket_qua_chi_tiet("HÌNH 4.2 (ẢNH A02) - VÍ DỤ 2 TRÊN PHIẾU (T02 / VD02)", [3, 4, 5], [4, 5, 6], 8)
+        in_ket_qua_chi_tiet("HÌNH 4.2 (ẢNH A02) - VÍ DỤ 2 TRÊN PHIẾU (VD02)", [3, 4, 5], [4, 5, 6], 8)
     elseif ca == "--ca=3"
-        in_ket_qua_chi_tiet("HÌNH 4.3 (ẢNH A03) - CA TỰ THIẾT KẾ 1: TẤT CẢ ĐỒ VẬT VỪA TÚI (T03 / TK01)", [1, 2, 3], [10, 20, 30], 10)
+        in_ket_qua_chi_tiet("HÌNH 4.3 (ẢNH A03) - CA TỰ THIẾT KẾ 1: TẤT CẢ ĐỒ VẬT VỪA TÚI (TK01)", [1, 2, 3], [10, 20, 30], 10)
     elseif ca == "--ca=4"
-        in_ket_qua_chi_tiet("HÌNH 4.4 (ẢNH A04) - CA TỰ THIẾT KẾ 2: CÙNG TRỌNG LƯỢNG, CHỌN GIÁ TRỊ CAO (T04 / TK02)", [5, 5], [20, 50], 5)
+        in_ket_qua_chi_tiet("HÌNH 4.4 (ẢNH A04) - CA TỰ THIẾT KẾ 2: CÙNG TRỌNG LƯỢNG, CHỌN GIÁ TRỊ CAO (TK02)", [5, 5], [20, 50], 5)
     elseif ca == "--ca=5"
-        in_ket_qua_chi_tiet("HÌNH 4.5 (ẢNH A05) - CA BIÊN 1: SỨC CHỨA TÚI W = 0 (T05 / BIEN01 / CA 2 PHIẾU)", [2, 3], [10, 20], 0)
+        in_ket_qua_chi_tiet("HÌNH 4.5 (ẢNH A05) - CA BIÊN 1: SỨC CHỨA TÚI W = 0 (BIEN01 / CA 2 PHIẾU)", [2, 3], [10, 20], 0)
     elseif ca == "--ca=6"
-        in_ket_qua_chi_tiet("HÌNH 4.6 (ẢNH A06) - CA BIÊN 2: KHÔNG LẤY MỘT ĐỒ VẬT HAI LẦN (T06 / BIEN02 / CA 4 PHIẾU)", [2], [3], 4)
+        in_ket_qua_chi_tiet("HÌNH 4.6 (ẢNH A06) - CA BIÊN 2: KHÔNG LẤY MỘT ĐỒ VẬT HAI LẦN (BIEN02 / CA 4 PHIẾU)", [2], [3], 4)
     elseif ca == "--ca=7"
-        in_ket_qua_chi_tiet("HÌNH 4.7 (ẢNH A07) - CA BIÊN 3: MỌI ĐỒ VẬT NẶNG HƠN W (T07 / BIEN03 / CA 3 PHIẾU)", [5], [9], 4)
+        in_ket_qua_chi_tiet("HÌNH 4.7 (ẢNH A07) - CA BIÊN 3: MỌI ĐỒ VẬT NẶNG HƠN W (BIEN03 / CA 3 PHIẾU)", [5], [9], 4)
     elseif ca == "--ca=8"
         minh_hoa_du_lieu_sai()
     else

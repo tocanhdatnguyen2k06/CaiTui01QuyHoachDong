@@ -375,12 +375,13 @@
                 <!-- Chọn ca thực nghiệm nhanh & Nút sinh ngẫu nhiên -->
                 <div class="flex flex-wrap items-center gap-1.5 text-xs">
                     <span class="text-[var(--mo)] font-medium mr-1">Ca mẫu:</span>
-                    <button onclick="loadSample(1)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">Ví dụ 1 (W=10)</button>
-                    <button onclick="loadSample(2)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">Ví dụ 2 (W=8)</button>
+                    <button onclick="loadSample(1)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">VD01: Ví dụ 1 (W=10)</button>
+                    <button onclick="loadSample(2)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">VD02: Ví dụ 2 (W=8)</button>
                     <button onclick="loadSample(3)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">TK01 (Vừa túi)</button>
                     <button onclick="loadSample(4)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">TK02 (Cùng W)</button>
                     <button onclick="loadSample(5)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">BIEN01 (W=0)</button>
-                    <button onclick="loadSample(6)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">BIEN03 (Quá nặng)</button>
+                    <button onclick="loadSample(6)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">BIEN02 (1 lần)</button>
+                    <button onclick="loadSample(7)" class="px-2.5 py-1 rounded-md bg-[var(--chim)] hover:bg-[var(--vien)] text-[var(--chu2)] border border-[var(--vien)] font-medium transition">BIEN03 (Quá nặng)</button>
                     
                     <button onclick="sinhDeBaiNgauNhien()" class="px-2.5 py-1 rounded-md bg-amber-500/20 hover:bg-amber-500/30 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700 font-bold transition flex items-center gap-1 ml-1" title="Tự động tạo ngẫu nhiên một đề bài mới">
                         🎲 Sinh đề bài ngẫu nhiên
@@ -634,14 +635,15 @@
             }
         }
 
-        // Ca mẫu
+        // Ca mẫu đúng theo đề tài DT051
         const samples = {
             1: { W: 10, w: [5, 4, 6, 3], v: [10, 40, 30, 50] },
             2: { W: 8,  w: [3, 4, 5],    v: [4, 5, 6] },
             3: { W: 10, w: [1, 2, 3],    v: [10, 20, 30] },
             4: { W: 5,  w: [5, 5],       v: [20, 50] },
             5: { W: 0,  w: [2, 3],       v: [10, 20] },
-            6: { W: 4,  w: [5, 6, 7],    v: [10, 20, 30] }
+            6: { W: 4,  w: [2],          v: [3] },
+            7: { W: 4,  w: [5],          v: [9] }
         };
 
         function loadSample(id) {

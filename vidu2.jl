@@ -17,7 +17,7 @@ v2 = [4, 5, 6]
 W2 = 8
 
 val2, chon2, f2, tw2 = in_ket_qua_chi_tiet(
-    "HÌNH 4.2 (ẢNH A02) - VÍ DỤ 2 TRÊN PHIẾU (CA KIỂM THỬ T02 / VD02)",
+    "HÌNH 4.2 (ẢNH A02) - VÍ DỤ 2 TRÊN PHIẾU (CA KIỂM THỬ VD02)",
     w2, v2, W2;
     in_bang = true
 )
@@ -26,4 +26,3 @@ println("\nĐối chiếu Expected trên phiếu DT051:")
 println("  - Expected: Giá trị tối ưu = 10, ID chọn = [1, 3], tổng trọng lượng = 8")
 println("  - Giải thích: Đồ 1 và 3 vừa đủ túi (3 + 5 = 8) và tốt hơn các lựa chọn còn lại (4 + 6 = 10).")
 println("  - Kết luận: ", (val2 == 10 && chon2 == [1, 3] && tw2 == 8) ? ">>> PASS (ĐÚNG 100%) <<<" : "FAIL")
-
