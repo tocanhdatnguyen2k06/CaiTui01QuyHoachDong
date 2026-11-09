@@ -16,7 +16,7 @@ Toàn bộ thuật toán quy hoạch động, truy vết, kiểm tra hợp đồ
 - Chương, mục, bài tập, trang in và trang PDF đúng đề: Chương 4, mục **4.3.2.2 Bài toán cái túi**; Ví dụ 4.8; Bài 4.3; Bài tập chương 4, câu 22 và 32; trang in 98–100, 103, 112; trang PDF 110–112, 115, 124.
 - URL GitHub thật: `https://github.com/tocanhdatnguyen2k06/CaiTui01QuyHoachDong`; SHA chạy C ghi trong báo cáo và tệp `N24DCDT057_DT051_ToCanhDatNguyen_ThongTinNop.txt` nộp rời.
 - Trang web mô phỏng trực quan online (GitHub Pages): [https://tocanhdatnguyen2k06.github.io/CaiTui01QuyHoachDong/](https://tocanhdatnguyen2k06.github.io/CaiTui01QuyHoachDong/).
-- Permalink tệp thuật toán tại C: `https://github.com/tocanhdatnguyen2k06/CaiTui01QuyHoachDong/blob/9cccb550b30662856418e6fef732f53f1a11aeec/src/DeTai.jl`; phiên bản Julia: **Julia 1.10+**.
+- Permalink tệp thuật toán tại C: `https://github.com/tocanhdatnguyen2k06/CaiTui01QuyHoachDong/blob/36adb23df7e2280645d9a159ebd852f3d5e89667/src/DeTai.jl`; phiên bản Julia: **Julia 1.10+**.
 
 ## Bắt đầu và chạy chương trình
 
@@ -30,12 +30,12 @@ julia --startup-file=no demo.jl
 julia --startup-file=no test/runtests.jl
 ```
 
-Chạy riêng từng ví dụ hoặc từng ca minh họa từ A01 đến A08:
+Chạy riêng từng ví dụ hoặc từng ca minh họa (VD01, VD02, TK01, TK02, BIEN01..03, LOI01):
 
 ```powershell
-julia --startup-file=no vidu1.jl          # Chạy riêng Ví dụ 1 trên phiếu (Ảnh A01 - Hình 4.1)
-julia --startup-file=no vidu2.jl          # Chạy riêng Ví dụ 2 trên phiếu (Ảnh A02 - Hình 4.2)
-julia --startup-file=no demo.jl --ca=1    # Thay 1 bằng 2..8 để chạy từng ca minh họa A01..A08
+julia --startup-file=no vidu1.jl          # Chạy riêng Ví dụ 1 trên phiếu (VD01 - Hình 4.1)
+julia --startup-file=no vidu2.jl          # Chạy riêng Ví dụ 2 trên phiếu (VD02 - Hình 4.2)
+julia --startup-file=no demo.jl --ca=1    # Thay 1 bằng 2..8 để chạy từng ca minh họa từ 1 đến 8
 julia --startup-file=no demo.jl --nhap    # Chế độ nhập dữ liệu trực tiếp từ bàn phím
 ```
 
@@ -60,11 +60,11 @@ N24DCDT057_DT051_ToCanhDatNguyen/
 ├── demo.jl                         # Chạy minh họa các ca (--ca=1..8) và nhập liệu bàn phím (--nhap)
 ├── README.md                       # Hướng dẫn chi tiết, căn cứ đề tài và cách chạy nghiệm thu
 ├── requirements.txt                # Khai báo môi trường và phiên bản (Julia >= 1.10)
-├── vidu1.jl                        # Kịch bản chạy riêng Ví dụ 1 trên phiếu (Ảnh A01 - Hình 4.1)
-├── vidu2.jl                        # Kịch bản chạy riêng Ví dụ 2 trên phiếu (Ảnh A02 - Hình 4.2)
+├── vidu1.jl                        # Kịch bản chạy riêng Ví dụ 1 trên phiếu (01_vi_du_1.png - Hình 4.1)
+├── vidu2.jl                        # Kịch bản chạy riêng Ví dụ 2 trên phiếu (02_vi_du_2.png - Hình 4.2)
 ├── docs/
 │   └── anh_ket_qua/
-│       └── README.md               # Quy cách đặt tên và danh mục 11 ảnh minh chứng cá nhân (A01-A11)
+│       └── README.md               # Quy cách đặt tên và danh mục 11 ảnh minh chứng cá nhân (01..11)
 ├── src/
 │   └── DeTai.jl                    # Thuật toán chính: cai_tui_bang, truy_vet_do, kiem_tra_dau_vao, v.v.
 └── test/
@@ -85,10 +85,10 @@ N24DCDT057_DT051_ToCanhDatNguyen/
 |---|---|
 | `src/DeTai.jl` | Kiểm tra đầu vào `kiem_tra_dau_vao`, lập bảng 2D `cai_tui_bang`, truy vết `truy_vet` / `truy_vet_do`, kiểm chứng nghiệm `kiem_tra_chon`, hàm chính `giai_bai` / `cai_tui_dp`, quy hoạch động 1 chiều `cai_tui_1d` và vét cạn đối chứng `liet_ke_vet_can` |
 | `demo.jl` | Chạy mặc định 2 ví dụ trên phiếu, 8 ca minh họa (`--ca=1` đến `--ca=8`) và chế độ nhập bàn phím (`--nhap`) |
-| `vidu1.jl` | Chạy riêng Ví dụ 1 trên phiếu (`n=4, W=10, w=[5,4,6,3], v=[10,40,30,50]`) phục vụ chụp Ảnh A01 |
-| `vidu2.jl` | Chạy riêng Ví dụ 2 trên phiếu (`n=3, W=8, w=[3,4,5], v=[4,5,6]`) phục vụ chụp Ảnh A02 |
+| `vidu1.jl` | Chạy riêng Ví dụ 1 trên phiếu (`n=4, W=10, w=[5,4,6,3], v=[10,40,30,50]`) phục vụ chụp `01_vi_du_1.png` |
+| `vidu2.jl` | Chạy riêng Ví dụ 2 trên phiếu (`n=3, W=8, w=[3,4,5], v=[4,5,6]`) phục vụ chụp `02_vi_du_2.png` |
 | `test/runtests.jl` | 12 ca kiểm thử độc lập có định danh (`VD01`, `VD02`, `TK01`, `TK02`, `BIEN01..03`, `LOI01`, `KT09..12`), tổng cộng 41 phép kiểm tra `@test` / `@test_throws` |
-| `docs/anh_ket_qua/` | Thư mục lưu trữ 11 ảnh minh chứng thực chạy cá nhân từ A01 đến A11 (`01_vi_du_1.png` đến `11_github_repo_commit.png`) |
+| `docs/anh_ket_qua/` | Thư mục lưu trữ 11 ảnh minh chứng thực chạy cá nhân (`01_vi_du_1.png` đến `11_github_repo_commit.png`) |
 
 Kết quả 8 ca trong `demo.jl`:
 - Demo 1 (`--ca=1`, Ví dụ 1 phiếu / Ca 5 phiếu): giá trị tối ưu `90`, chọn `[2, 4]`, trọng lượng `7 / 10`.
